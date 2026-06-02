@@ -1,0 +1,36 @@
+services:
+  npm:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: npm
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DISABLE_IPV6: "true"
+      TZ: "Asia/Jakarta"
+    volumes:
+      - ./npm/data:/data
+      - ./npm/letsencrypt:/etc/letsencrypt
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - TZ=Asia/Jakarta
+      - N8N_SECURE_COOKIE=false
+      - N8N_DEFAULT_BINARY_DATA_MODE=filesystem
+      - PYTHON_PATH=/usr/bin/python3
+      - N8N_HOST=n8n.pisazor.com
+      - N8N_PROTOCOL=https
+      - WEBHOOK_URL=https://n8n.pisazor.com/
+      - N8N_PROXY_HOPS=1
+      - N8N_LISTEN_ADDRESS=0.0.0.0
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+volumes:
+  n8n_data:
