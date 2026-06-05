@@ -32,7 +32,7 @@ services:
       - N8N_PUSH_BACKEND=websocket
       - N8N_SECURE_COOKIE=false
       - N8N_DEFAULT_BINARY_DATA_MODE=filesystem
-      - N8N_ENCRYPTION_KEY=replace-with-long-random-secret
+      - N8N_ENCRYPTION_KEY=571202c9273883fad9d6f88046a1fff38b307d65e4caaada2c05f33ed4c76aca
     volumes:
       - n8n_data:/home/node/.n8n
     networks:
